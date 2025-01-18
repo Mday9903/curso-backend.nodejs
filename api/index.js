@@ -12,7 +12,7 @@ const {
 //Creamos una aplicación con el constructor de express:
 const app = express();
 //Asginamos el puerto en el que queremos que corra el servidor:
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 //Middleware
 app.use(express.json());
@@ -20,7 +20,7 @@ app.use(express.json());
 // Servir archivos estáticos
 app.use(express.static('public'));
 
-const whitelist = ['http://localhost:8080', 'https://myapp.co'];
+const whitelist = ['http://localhost:3000', 'https://myapp.co'];
 const options = {
   origin: (origin, callback) => {
     if (whitelist.includes(origin) || !origin) {
@@ -34,11 +34,11 @@ const options = {
 app.use(cors(options));
 
 //Params
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.json('Hola mi server en express');
 });
 
-app.get('/nueva-ruta', (req, res) => {
+app.get('/api/nueva-ruta', (req, res) => {
   res.json('Hola soy una nueva ruta');
 });
 
